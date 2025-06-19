@@ -9,19 +9,28 @@ class LoginHandler
 
     public static function checkLogin()
     {
+
         if (!empty($_SESSION['token'])) {
             $token = $_SESSION['token'];
 
             $data = User::select()->where('token', $token)->one();
-//            if (count($data) > 0) {
-//
-////                $loggenUser = new User();
-////                $loggenUser->setId($data[id]);
-////                $loggenUser->setEmail($data[email]);
-////                $loggenUser->setName($data[name]);
-//
-//                return $loggenUser;
-//            }
+
+            if (count($data) > 0) {
+
+                $loggedUser = new User(
+                    $data["id"],
+                    $data["email"],
+                    $data["name"]
+
+
+
+                );
+//                $loggedUser->id = ($data["id"]);
+//                $loggedUser->email = ($data["email"]);
+//                $loggedUser->name = ($data["name"]);
+
+                return $loggedUser;
+            }
 
         } else return false;
     }
