@@ -1,5 +1,5 @@
-<?=$render("header")?>
-
+<?=$render("header", ["loggedUser" => $loggedUser])?>
+<!--<h1>--><?php //=$loggedUser->name?><!--</h1>-->
 <section class="container main">
 
     <?=$render("sidebar")?>

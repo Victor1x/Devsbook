@@ -13,13 +13,13 @@ class  HomeController extends Controller
     {
         $this->loggedUser = LoginHandler::checkLogin();
         if (!$this->loggedUser) {
-            $this->redirect("/");
+            $this->redirect("/login");
         };
     }
 
     public function index()
     {
-        $this->render('home', ['nome' => 'Bonieky']);
+        $this->render('home', ["loggedUser" => $this->loggedUser]);
     }
 
 }

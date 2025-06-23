@@ -16,14 +16,12 @@ class LoginHandler
             $data = User::select()->where('token', $token)->one();
 
             if (count($data) > 0) {
-
+//                dd($data);
+//                exit();
                 $loggedUser = new User(
                     $data["id"],
                     $data["email"],
                     $data["name"]
-
-
-
                 );
 //                $loggedUser->id = ($data["id"]);
 //                $loggedUser->email = ($data["email"]);

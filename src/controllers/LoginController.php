@@ -25,7 +25,7 @@ class LoginController extends Controller
             $token = LoginHandler::verifyLogin($email, $password); // metodo static  para verifica se usuario tem login, sem gera um token se nao volta o false
             if ($token) {
                 $_SESSION['token'] = $token;
-                $this->redirect("/");
+                $this->redirect("/home");
             } else {
                 $_SESSION['flash'] = 'Email ou Password incorrecte';
                 $this->redirect("/login");

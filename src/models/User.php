@@ -8,10 +8,12 @@ use \core\Model;
 class User extends Model
 {
     private $loggedUser;
-    private $id;
-    private $email;
-    private  $name;
-    public function __construct($id,$name,$email)
+    public $id;
+    public $email;
+
+    public $name;
+
+    public function __construct($id, $email, $name)
     {
         $this->id = $id;
         $this->email = $email;
