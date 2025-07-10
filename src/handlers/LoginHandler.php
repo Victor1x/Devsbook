@@ -21,7 +21,8 @@ class LoginHandler
                 $loggedUser = new User(
                     $data["id"],
                     $data["email"],
-                    $data["name"]
+                    $data["name"],
+                    $data["avatar"]
                 );
 //                $loggedUser->id = ($data["id"]);
 //                $loggedUser->email = ($data["email"]);
@@ -49,15 +50,14 @@ class LoginHandler
         if ($user) {
             if (password_verify($password, $user["password"])) {
                 $token = md5(time() . rand(0, 9999) . time());
-
                 User::update()
                     ->set("token", $token)
                     ->where('email', $email)
                     ->execute();
-
                 return $token;
             }
         }
+
         return false;
     }
 

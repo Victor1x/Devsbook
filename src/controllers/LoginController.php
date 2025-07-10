@@ -9,12 +9,19 @@ class LoginController extends Controller
 {
     public function login()
     {
-        $flash = '';
-        if (!empty($_SESSION['flash'])) {
-            $flash = $_SESSION['flash'];
-            $_SESSION['flash'] = '';
+//dd($_SESSION['token']);
+
+        if (!empty($_SESSION['token'])) {
+            $this->redirect('/');
+        } else {
+            $flash = '';
+            if (!empty($_SESSION['flash'])) {
+                $flash = $_SESSION['flash'];
+                $_SESSION['flash'] = '';
+            }
+            $this->render('login', ["flash" => $flash]);
         }
-        $this->render('login', ["flash" => $flash]);
+
     }
 
     public function loginAction()
@@ -25,11 +32,10 @@ class LoginController extends Controller
             $token = LoginHandler::verifyLogin($email, $password); // metodo static  para verifica se usuario tem login, sem gera um token se nao volta o false
             if ($token) {
                 $_SESSION['token'] = $token;
-                $this->redirect("/home");
+                $this->redirect("/");
             } else {
                 $_SESSION['flash'] = 'Email ou Password incorrecte';
                 $this->redirect("/login");
-
             }
 
         } else {
@@ -40,12 +46,16 @@ class LoginController extends Controller
 
     public function cadastro()
     {
-        $flash = '';
-        if (!empty($_SESSION['flash'])) {
-            $flash = $_SESSION['flash'];
-            $_SESSION['flash'] = '';
+        if (!empty($_SESSION['token'])) {
+            $this->redirect('/');
+        } else {
+            $flash = '';
+            if (!empty($_SESSION['flash'])) {
+                $flash = $_SESSION['flash'];
+                $_SESSION['flash'] = '';
+            }
+            $this->render('cadastro', ["flash" => $flash]);
         }
-        $this->render('cadastro', ["flash" => $flash]);
     }
 
     public function cadastroAction()
@@ -60,22 +70,22 @@ class LoginController extends Controller
             $birthdate = explode("/", $birthdate);
 
             if (count($birthdate) != 3) {
-                $_SESSION["flash"] = "Data de nascimento invalida" ;
+                $_SESSION["flash"] = "Data de nascimento invalida";
                 $this->redirect("/cadastro");
             }
 
-            $birthdate = $birthdate[2]."-".$birthdate[1]."-".$birthdate[0];
+            $birthdate = $birthdate[2] . "-" . $birthdate[1] . "-" . $birthdate[0];
 
             if (!strtotime($birthdate)) {
-                $_SESSION["flash"] = "Data de nascimento invalida  " ;
+                $_SESSION["flash"] = "Data de nascimento invalida  ";
                 $this->redirect("/cadastro");
             }
 
             if (!LoginHandler::emailExists($email)) {
-               $token = LoginHandler::addUser($name, $email, $password, $birthdate);
-               $_SESSION['token'] = $token;
-               $this->redirect("/home");
-            }else{
+                $token = LoginHandler::addUser($name, $email, $password, $birthdate);
+                $_SESSION['token'] = $token;
+                $this->redirect("/");
+            } else {
                 $_SESSION["flash"] = "Email já cadastrado";
                 $this->redirect("/cadastro");
             }

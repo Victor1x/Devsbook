@@ -22,9 +22,9 @@
             </div>
             <div class="head-side-right">
                 <a href="<?=$base?>/perfil" class="user-area">
-                    <div class="user-area-text"><?= $loggedUser->name?></div>
+                    <div class="user-area-text"><?=$loggedUser->toArray()["name"]?></div>
                     <div class="user-area-icon">
-                        <img src="<?= $base ?>/media/avatars/avatar.jpg" />
+                        <img src="<?= $base ?>/media/avatars/<?=$loggedUser->toArray()["avatar"]?>" />
                     </div>
                 </a>
                 <a href="<?= $base ?>/logout" class="user-logout">

@@ -6,6 +6,7 @@ use src\Config;
 class Controller {
 
     protected function redirect($url) {
+
         header("Location: " . $this->getBaseUrl().$url);
         exit;
     }

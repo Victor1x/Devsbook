@@ -8,17 +8,21 @@ use \core\Model;
 class User extends Model
 {
     private $loggedUser;
-    public $id;
-    public $email;
-
-    public $name;
-
-    public function __construct($id, $email, $name)
+    private int $id;
+    private string $email;
+    private string $name;
+    private string $avatar;
+    public function __construct ($id, $email, $name,$avatar)
     {
         $this->id = $id;
         $this->email = $email;
         $this->name = $name;
+        $this->avatar = $avatar;
     }
 
+
+    public function toArray(): array {
+        return get_object_vars($this); // retorna ['nome' => ..., 'idade' => ..., 'email' => ...]
+    }
 
 }
